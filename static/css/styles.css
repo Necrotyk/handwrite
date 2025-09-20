@@ -1,0 +1,20 @@
+#bed_visualizer {
+    border: 1px solid #ccc;
+    position: relative;
+    background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg"><path d="M5 0v10M0 5h10" stroke="%23ddd" stroke-width="1"/></svg>');
+    background-size: 10px 10px;
+}
+
+#paper {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px dashed #333;
+    position: absolute;
+    cursor: move;
+}
+
+#text_preview {
+    padding: 10px;
+    white-space: pre-wrap;
+    overflow: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}

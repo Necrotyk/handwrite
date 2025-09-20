@@ -1,0 +1,90 @@
+<div id="tab_handcode" data-bind="with: viewModel">
+    <div class="row-fluid">
+        <!-- Left Column: Text, Font, and Style -->
+        <div class="span6">
+            <div class="control-group">
+                <h3>Text Input</h3>
+                <textarea class="span12" rows="5" data-bind="value: text_input" placeholder="Enter the text to be written..."></textarea>
+            </div>
+
+            <div class="control-group">
+                <h3>Font Options</h3>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <label>Font Size</label>
+                        <input class="span12" type="number" data-bind="value: font_size">
+                    </div>
+                    <div class="span6">
+                        <label>Style (<span data-bind="text: style"></span>)</label>
+                        <input class="span12" type="range" min="0" max="11" step="1" data-bind="value: style">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Style Previews</h3>
+                <div id="style-previews" class="row-fluid">
+                    <!-- ko foreach: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] -->
+                    <div class="span3">
+                        <img class="style-preview-image" 
+                             data-bind="click: $parent.selectStyle, 
+                                        attr: { src: 'https://placehold.co/100x50/eee/333?text=Style+' + $data }, 
+                                        css: { 'selected': $parent.style() == $data }"
+                             alt="Preview for Style" />
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Visual Layout and Generation -->
+        <div class="span6">
+            <h3>Visual Layout</h3>
+            <div id="bed_visualizer" data-bind="style: { width: bed_width() + 'px', height: bed_depth() + 'px' }">
+                <div id="paper" data-bind="style: { width: paper_width() + 'px', height: paper_height() + 'px' }">
+                    <div id="text_preview" data-bind="text: text_input, style: { transform: 'rotate(' + rotation() + 'deg)' }"></div>
+                </div>
+            </div>
+
+            <fieldset>
+                <legend>Layout Controls</legend>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <label>Paper Width (mm)</label>
+                        <input class="span12" type="number" data-bind="value: paper_width">
+                    </div>
+                    <div class="span6">
+                        <label>Paper Height (mm)</label>
+                        <input class="span12" type="number" data-bind="value: paper_height">
+                    </div>
+                </div>
+                <label>Rotation (<span data-bind="text: rotation"></span>°)</label>
+                <input class="span12" type="range" min="0" max="360" data-bind="value: rotation">
+                
+                <div class="well well-small">
+                    <strong>Position:</strong>
+                    X: <span data-bind="text: paper_x"></span>mm, 
+                    Y: <span data-bind="text: paper_y"></span>mm
+                </div>
+                <button class="btn" data-bind="click: centerPaper"><i class="icon-screenshot"></i> Center Paper</button>
+            </fieldset>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row-fluid">
+        <div class="span6">
+            <h3>Generate</h3>
+            <p>Final settings will be sent to the HandCode server to generate the GCode file.</p>
+            <button class="btn btn-primary btn-large" data-bind="click: generateGCode, enable: !generating()"><i class="icon-pencil icon-white"></i> Generate GCode</button>
+            <span data-bind="if: generating"><i class="icon-spinner icon-spin"></i> Generating...</span>
+        </div>
+        <div class="span6">
+            <h3>Batch Processing</h3>
+            <textarea class="span12" rows="3" data-bind="value: batch_input" placeholder="Enter CSV data: text,style,font_size"></textarea>
+            <button class="btn" data-bind="click: runBatch"><i class="icon-tasks"></i> Run Batch</button>
+        </div>
+    </div>
+</div>
+
